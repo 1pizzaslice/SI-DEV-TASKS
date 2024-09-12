@@ -14,13 +14,13 @@ const urlRoute = require('./routes/router');        //   requiring the router fi
 
 const Schema = require('./models/tasksSchema');             // requiring the schema from the models folder
 
-const PORT = 5000;
+const PORT = 5050;
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));  
 app.use(express.json());  
 
-app.use('/', urlRoute);
+app.use('/user', urlRoute);
 
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

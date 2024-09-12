@@ -1,6 +1,7 @@
 // Writting the functions to handle the requests
 
 const Task  = require('../models/tasksSchema');
+const mongoose = require('mongoose');
 
 const handleReadRequest = async (req, res) => {
   try {
@@ -30,8 +31,13 @@ const handleReadRequest = async (req, res) => {
 };
 
   const handleReadRequestById = async (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ message: 'Invalid Task ID format' });
+    }
+    
     try {
-        const task = await Task.findById(req.params.id);
+        const task = await Task.findOne({ task_id: new mongoose.Types.ObjectId(req.params.id) });
         if (!task) return res.status(404).json({ message: 'Task not found' });
         res.json(task);
     } catch (err) {
@@ -52,10 +58,10 @@ const handleReadRequest = async (req, res) => {
   
   const handleDeleteRequest = async (req, res) => {
     try {
-        const task = await Task.findById(req.params.id);
+        const task = await Task.findOne({ task_id: new mongoose.Types.ObjectId(req.params.id) });
         if (!task) return res.status(404).json({ message: 'Task not found' });
 
-        await task.remove();
+        await task.deleteOne();
         res.json({ message: 'Task deleted successfully' });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -64,7 +70,8 @@ const handleReadRequest = async (req, res) => {
   
   const handleUpdateRequest = async (req, res) => {
     try {
-        const task = await Task.findById(req.params.id);
+        const task = await Task.findOne({ task_id: new mongoose.Types.ObjectId(req.params.id) });
+
         if (!task) return res.status(404).json({ message: 'Task not found' });
 
         Object.assign(task, req.body);                // Merge request body with the existing task data

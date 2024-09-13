@@ -4,31 +4,34 @@ const Task  = require('../models/tasksSchema');
 const mongoose = require('mongoose');
 
 const handleReadRequest = async (req, res) => {
-  try {
-      const { status, sortBy } = req.query; // Extract query parameters for filtering and sorting
+    try {
+      const { status, sortBy } = req.query;
       let query = {};
+
       if (status) {
-          query.status = status;
+        query.status = status;
       }
-
-      let tasks = Task.find(query);
-
+  
+      let tasksQuery = Task.find(query); 
+  
       if (sortBy) {
-          const sortOptions = {};
-          if (sortBy === 'due_date') sortOptions.due_date = 1;
-          if (sortBy === 'created_at') sortOptions.created_at = 1;
-          if (sortBy === 'updated_at') sortOptions.updated_at = 1;
-          if (sortBy === 'priority') sortOptions.priority = 1;
-        //   if (sortBy === 'status') sortOptions.status = 1;
-          tasks = tasks.sort(sortOptions);
+        const validSortFields = ['due_date', 'created_at', 'updated_at', 'priority', 'status' ];
+  
+        // Only apply sorting if the sortBy field is valid
+        if (validSortFields.includes(sortBy)) {
+          const sortOptions = { [sortBy]: 1 };  
+          tasksQuery = tasksQuery.sort(sortOptions);  
+        } else {
+          return res.status(400).json({ message: "Invalid sort field" });
+        }
       }
-
-      const results = await tasks.exec();
+  
+      const results = await tasksQuery.exec();  
       res.json(results);
-  } catch (err) {
+    } catch (err) {
       res.status(500).json({ message: err.message });
-  }
-};
+    }
+  };
 
   const handleReadRequestById = async (req, res) => {
 

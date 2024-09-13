@@ -3,35 +3,39 @@
 
 This backend will support task management, allowing users to create, update, delete, and retrieve tasks. The backend will also enable sorting and filtering of tasks based on status and other parameters.
 
-## Build With
+## Built With
 
     1)  Node
     2)  Express Js
     3)  MongoDB
 
 
-## Installation
+## Run Locally
 
-Install using git 
+Clone the project
 
 ```bash
   git clone https://github.com/1pizzaslice/SI-DEV-TASKS.git
+```
 
+Go to the project directory
+
+```bash
   cd SI-DEV-TASKS
 ```
+
+Install dependencies
+
 ```bash
   npm install
 ```
 
-```bash
-  node index.js
-```
-or
+Start the server
 
 ```bash
-  npm start
+  npm run start
 ```
-    
+
 
 ## API Reference
 
@@ -46,6 +50,11 @@ or
 
 ```http
   GET /user/GET/tasks
+```
+#### Sorting Example : Get all tasks by priority
+
+```http
+  GET /user/GET/tasks?sortBy=priority
 ```
 
 #### Get task by ID
@@ -66,4 +75,9 @@ or
   DELETE /user/DELETE/tasks/:id
 ```
 
+
+
+## Screenshots
+
+Please refer the Screenshots folder section
 

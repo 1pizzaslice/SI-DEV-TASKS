@@ -3,6 +3,11 @@
 
 This backend will support task management, allowing users to create, update, delete, and retrieve tasks. The backend will also enable sorting and filtering of tasks based on status and other parameters.
 
+#### Deployed Link
+https://si-dev-tasks.onrender.com/
+
+Refer API References
+
 ## Built With
 
     1)  Node

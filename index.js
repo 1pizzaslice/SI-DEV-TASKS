@@ -4,7 +4,7 @@ const app = express();
 
 const { connectToMongoDB } = require('./connect');      //connecting to the database
 
-connectToMongoDB('mongodb://localhost:27017/tasks-app')
+connectToMongoDB('process.env.MONGO_URL')
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error(err));
 
@@ -14,7 +14,7 @@ const urlRoute = require('./routes/router');        //   requiring the router fi
 
 const Schema = require('./models/tasksSchema');             // requiring the schema from the models folder
 
-const PORT = 5050;
+const PORT = process.env.PORT || 5050 ;
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));  

@@ -1,10 +1,12 @@
+require('dotenv').config();
+
 const express = require('express');      // requiring express and creating an instance of it
 const app = express();
 
 
 const { connectToMongoDB } = require('./connect');      //connecting to the database
 
-connectToMongoDB('process.env.MONGO_URL')
+connectToMongoDB(process.env.MONGO_URL)
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error(err));
 
